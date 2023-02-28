@@ -39,6 +39,14 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         >
           Thank you for your purchase!
         </Typography>
+        <Typography
+          variant="subtitle2"
+          align="center"
+          color="textSecondary"
+          component="p"
+        >
+          Come back soon
+        </Typography>
         <Copyright />
       </Box>
     </>
