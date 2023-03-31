@@ -1,14 +1,15 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 type CSVFileImportProps = {
   url: string;
   title: string;
+  onImportFileFailure: (status: number) => void;
 };
 
-export default function CSVFileImport({ url, title }: CSVFileImportProps) {
+export default function CSVFileImport({ url, title, onImportFileFailure }: CSVFileImportProps) {
   const [file, setFile] = React.useState<File>();
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +51,8 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
         setFile(undefined);
       }
     } catch (e) {
-      console.log('error: ', e);
+      const { response } = e as AxiosError;
+      onImportFileFailure(response!.status);
     }
   };
 
@@ -60,7 +62,7 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
         {title}
       </Typography>
       {!file ? (
-        <input type="file" onClick={console.log} onChange={onFileChange} />
+        <input type="file" onChange={onFileChange} />
       ) : (
         <div>
           <button onClick={removeFile}>Remove file</button>
