@@ -32,6 +32,9 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
         const response = await axios({
           method: "GET",
           url,
+          headers: {
+            Authorization: window.localStorage.getItem('authorization_token') || import.meta.env.AUTH_TOKEN
+          },
           params: {
             name: encodeURIComponent(file.name),
           },
@@ -47,7 +50,7 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
         setFile(undefined);
       }
     } catch (e) {
-      console.log(e);
+      console.log('error: ', e);
     }
   };
 
@@ -57,7 +60,7 @@ export default function CSVFileImport({ url, title }: CSVFileImportProps) {
         {title}
       </Typography>
       {!file ? (
-        <input type="file" onChange={onFileChange} />
+        <input type="file" onClick={console.log} onChange={onFileChange} />
       ) : (
         <div>
           <button onClick={removeFile}>Remove file</button>
