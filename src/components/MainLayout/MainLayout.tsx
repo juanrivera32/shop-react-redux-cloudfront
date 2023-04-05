@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Container from "@mui/material/Container";
@@ -19,6 +19,12 @@ function Copyright() {
 }
 
 const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  useEffect(() => {
+    if (!window.localStorage.getItem('authorization_token')) {
+      window.localStorage.setItem('authorization_token', 'Basic anVhbnJpdmVyYTMyOlRFU1RfUEFTU1dPUkQ=');
+    }
+  }, [])
+
   return (
     <>
       <Header />
